@@ -20,6 +20,7 @@ from fastapi.responses import JSONResponse
 from core.config import settings
 from core.logging import get_logger
 from models.responses import ErrorResponse
+from api.market_data import router as market_data_router
 
 # Configurar logger
 logger = get_logger(__name__)
@@ -91,6 +92,8 @@ app = FastAPI(
     ],
 )
 
+# Incluir routers
+app.include_router(market_data_router, prefix="/api/v1/market-data", tags=["Market Data"])
 
 # Configurar CORS
 app.add_middleware(
@@ -243,6 +246,13 @@ async def not_found_handler(request: Request, exc):
                 "/api/v1/market-data/",
                 "/api/v1/market-data/stocks/{symbol}",
                 "/api/v1/market-data/stocks/search",
+                "/api/v1/market-data/multi-info",
+                "/api/v1/market-data/multi-history",
+                "/api/v1/market-data/{symbol}/history",
+                "/api/v1/market-data/{symbol}/info",
+                "/api/v1/market-data/{symbol}/fulldata",
+                "/api/v1/market-data/search",
+                "/api/v1/market-data/period-performance",
                 "/api/v1/market-data/health",
             ]
         },

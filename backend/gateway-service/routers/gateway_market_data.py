@@ -22,7 +22,7 @@ async def get_multiple_tickers_info(tickers: str):
         try:
             response = await client.get(
                 f"{MARKET_DATA_SERVICE_URL}/api/v1/market-data/multi-info",
-                params={"symbols": tickers}
+                params={"tickers": tickers}
             )
             response.raise_for_status()
             return response.json()
@@ -45,7 +45,7 @@ async def get_multiple_tickers_history(tickers: str, period: str = "1mo", interv
             response = await client.get(
                 f"{MARKET_DATA_SERVICE_URL}/api/v1/market-data/multi-history",
                 params={
-                    "symbols": tickers,
+                    "tickers": tickers,
                     "period": period,
                     "interval": interval,
                     "start": start,
@@ -515,7 +515,7 @@ async def get_period_performance(
         try:
             response = await client.get(
                 f"{MARKET_DATA_SERVICE_URL}/api/v1/market-data/period-performance",
-                params={"symbols": tickers, "period": period},
+                params={"tickers": tickers, "period": period},
                 timeout=30
             )
             response.raise_for_status()
