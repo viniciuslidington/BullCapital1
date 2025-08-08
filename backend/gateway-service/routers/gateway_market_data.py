@@ -1,28 +1,4 @@
-from fastapi import APIRouter, HTTPExcep@router.get("/multi-history")
-async def get_multiple_tickers_history(tickers: str, period: str = "1mo", interval: str = "1d", start: Optional[str] = None, end: Optional[str] = None, PrePost: bool = False, autoAdjust: bool = True):
-    async with httpx.AsyncClient() as client:
-        try:
-            # Build params dict with only compatible parameters
-            params = {
-                "symbols": tickers,
-                "interval": interval,
-                "PrePost": PrePost,
-                "autoAdjust": autoAdjust
-            }
-            
-            # Only include period OR start/end, not both
-            if start and end:
-                # If both start and end are provided, use them instead of period
-                params["start"] = start
-                params["end"] = end
-            else:
-                # Otherwise use period (default behavior)
-                params["period"] = period
-                
-            response = await client.get(
-                f"{MARKET_DATA_SERVICE_URL}/api/v1/market-data/multi-history",
-                params=params
-            )y
+from fastapi import APIRouter, HTTPException, Query, Response
 from pydantic import BaseModel
 import httpx
 from typing import List, Optional
